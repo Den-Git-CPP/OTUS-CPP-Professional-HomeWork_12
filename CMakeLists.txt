@@ -1,9 +1,9 @@
 cmake_minimum_required(VERSION 3.15)
 
 if ($ENV{GITHUB_RUN_NUMBER})
-    project (Matrix VERSION 0.0.$ENV{GITHUB_RUN_NUMBER})
+    project (MapReduce VERSION 0.0.$ENV{GITHUB_RUN_NUMBER})
 else()
-    project (Matrix VERSION 0.0.1)
+    project (MapReduce VERSION 0.0.1)
 endif()
 
 configure_file(version.h.in version.h)
@@ -50,58 +50,57 @@ configure_file(version.h.in version.h)
 #   endif()
 # endif()
 
-file(GLOB matrix_file_cpp
+file(GLOB mapreduce_cpp
  "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp"
 )
 
-add_executable(matrix_cli 
-${matrix_file_cpp}
+add_executable(mapreduce_cli 
+${mapreduce_cpp}
 )
 
-# add_executable(g_test_matrix 
-# test/g_test_matrix.h 
+# add_executable(g_test_mapreduce 
 # test/test.h
 # test/test.cpp)
 
-set_target_properties(matrix_cli 
-# g_test_matrix
+set_target_properties(mapreduce_cli 
+# g_test_mapreduce
 PROPERTIES
     CXX_STANDARD 17
     CXX_STANDARD_REQUIRED ON
 )
 
-target_include_directories(matrix_cli
+target_include_directories(mapreduce_cli
     PRIVATE 
     include
     "${CMAKE_BINARY_DIR}"
 )
-# target_link_libraries(g_test_matrix
+# target_link_libraries(g_test_mapreduce
 #    gtest gtest_main
 # )
 if (MSVC)
-    target_compile_options(matrix_cli 
+    target_compile_options(mapreduce_cli 
     PRIVATE
     /EHsc /W4 /WX
         )    
-    # target_compile_options(g_test_matrix 
+    # target_compile_options(g_test_mapreduce 
     # PRIVATE
     # /EHsc /W4 /WX
     #     )   
  else ()
-    target_compile_options(matrix_cli 
+    target_compile_options(mapreduce_cli 
     PRIVATE
     -Wextra -pedantic -Werror
         )
-    # target_compile_options(g_test_matrix 
+    # target_compile_options(g_test_mapreduce 
     # PRIVATE
     # -Wextra -pedantic -Werror
     #     )
 endif()
 
 # enable_testing()
-# add_test(test_version g_test_matrix)
+# add_test(test_version g_test_mapreduce)
 
-# install(TARGETS matrix_cli RUNTIME DESTINATION bin)
+# install(TARGETS mapreduce_cli RUNTIME DESTINATION bin)
 
 # set(CPACK_GENERATOR DEB)
 # set(CPACK_PACKAGE_VERSION_MAJOR "${PROJECT_VERSION_MAJOR}")

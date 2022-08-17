@@ -4,6 +4,10 @@
 #include <string>
 #include <algorithm>
 
+#include "prefix.h"
+#include "prefix_no_duplicates.h"
+#include "prefix_optimized.h"
+
 bool file_exists(const std::string& filename) {
     std::ifstream infile(filename);
     return infile.good();

@@ -1,11 +1,14 @@
 #pragma once
 
-#include <iostream>
-#include <fstream>
+#include <string> 
 #include <vector>
-#include <string>
+#include <fstream>
 #include <thread>
+#include <chrono>
+#include <algorithm>
+#include <future>
 #include <limits>
+#include <cassert>
 
  template<typename MapperCls, typename ReducerCls>
   class MapReduceEngine {
@@ -84,7 +87,39 @@
                 t.join();
             }
         }
-        void run_reduce() {
+        
+        void run_reduce() {            
+            int last_j = -1;
+            for (const auto& elem: map_results_flat) {
+                if ((last_j == -1) || 
+                    (data_for_reducer[last_j].key != elem.first)) {
+                    data_for_reducer.push_back({elem.first, {elem.second}});
+                    last_j++;
+                } else {
+                    data_for_reducer[last_j].values.emplace_back(elem.second);
+                }
+            }
+
+            auto num_threads = std::min(num_threads_reduce, static_cast<int>(data_for_reducer.size()));
+            reduce_results = std::vector<reduce_result_t>(num_threads, reduce_result_t());
+
+            std::vector<std::thread> reduce_threads;
+            auto total_blocks = static_cast<int>(data_for_reducer.size());
+            double step = static_cast<double>(total_blocks) / num_threads; // step >= 1
+            for (int i = 0, j = 0, j_next = 0; i < num_threads; i++) {
+                j = j_next;
+                if (i == num_threads - 1){
+                    j_next = total_blocks;
+                }else{
+                    j_next = static_cast<int>(step * (i + 1));
+                }
+                reduce_threads.emplace_back([this, j, j_next, i] {
+                    this->run_single_reducer(j, j_next, i);
+                });
+            }
+            for (auto& t: reduce_threads){
+                t.join();
+            }        
         }
 
         void run_single_reducer(int start_i, int end_i, int thread_idx) {

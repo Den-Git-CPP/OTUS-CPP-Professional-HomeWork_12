@@ -8,6 +8,8 @@ endif()
 
 configure_file(version.h.in version.h)
 
+find_package(Threads)
+
 # option(ENABLE_UNIT_TESTS "Enable unit tests" ON)
 # message(STATUS "Enable testing: ${ENABLE_UNIT_TESTS}")
 # if(ENABLE_UNIT_TESTS)
@@ -58,6 +60,9 @@ add_executable(mapreduce_cli
 ${mapreduce_cpp}
 )
 
+target_link_libraries(mapreduce_cli
+    ${CMAKE_THREAD_LIBS_INIT}
+)
 # add_executable(g_test_mapreduce 
 # test/test.h
 # test/test.cpp)
@@ -77,6 +82,10 @@ target_include_directories(mapreduce_cli
 # target_link_libraries(g_test_mapreduce
 #    gtest gtest_main
 # )
+target_link_libraries(g_test_mapreduce        
+        ${CMAKE_THREAD_LIBS_INIT}
+)
+
 if (MSVC)
     target_compile_options(mapreduce_cli 
     PRIVATE

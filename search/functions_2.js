@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['operator_28_29_0',['operator()',['../classprefix_1_1_prefix_mapper.html#a570a0f1a68251382c9d822fa9e3d3a83',1,'prefix::PrefixMapper::operator()()'],['../classprefix_1_1_prefix_reducer.html#a95b38b609c16fc223d2c0d90eb2f2faa',1,'prefix::PrefixReducer::operator()()'],['../classprefix__no__duplicates_1_1_prefix_mapper.html#ab868f895c4bc53a086662d1e8b83a0b9',1,'prefix_no_duplicates::PrefixMapper::operator()()'],['../classprefix__no__duplicates_1_1_prefix_reducer.html#a085ece0a79b15712dd65f1d73abf24e1',1,'prefix_no_duplicates::PrefixReducer::operator()()'],['../classprefix__optimized_1_1_prefix_mapper.html#a3bef272a0216f20dfccca27cea3837e0',1,'prefix_optimized::PrefixMapper::operator()()'],['../classprefix__optimized_1_1_prefix_reducer.html#a3b808e16342b8f5fe2996c8493ba59da',1,'prefix_optimized::PrefixReducer::operator()()']]]
+];
